@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:todo/screen/splash.dart';
+import 'package:todo/screen/main_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:todo/firebase_options.dart';
+//import 'package:todo/screen/splash.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -22,7 +29,7 @@ class MyApp extends StatelessWidget {
         ),
         scaffoldBackgroundColor: const Color(0xffd88e43),
       ),
-      home: const SplashScreen(),
+      home: const MainScreen(),
     );
   }
 }
