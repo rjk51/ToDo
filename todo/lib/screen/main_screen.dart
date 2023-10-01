@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo/screen/add_task.dart';
 import 'package:todo/widgets/task_list.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -36,10 +37,20 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('To-Do App'),
+        title: Text(
+          'TODO',
+          style: GoogleFonts.jacquesFrancoisShadow(
+            fontSize: 25,
+            color: Colors.black,
+          ),
+        ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.add),
+            icon: const Icon(
+              Icons.add,
+              color: Colors.black,
+              size: 30,
+            ),
             onPressed: () {
               Navigator.push(
                   context,

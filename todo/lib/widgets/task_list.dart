@@ -11,6 +11,65 @@ class TodoTaskList extends StatefulWidget {
 
 class _TodoTaskListState extends State<TodoTaskList> {
 
+  void _showEditDialog(String taskId, Map<String, dynamic> taskData) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        String editedName = taskData['name'];
+        String editedDescription = taskData['description'];
+
+        return AlertDialog(
+          title: const Text('Edit Task'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                onChanged: (value) {
+                  editedName = value;
+                },
+                controller: TextEditingController(text: taskData['name']),
+                decoration: const InputDecoration(labelText: 'Task Name'),
+              ),
+              TextField(
+                onChanged: (value) {
+                  editedDescription = value;
+                },
+                controller: TextEditingController(text: taskData['description']),
+                decoration: const InputDecoration(labelText: 'Task Description'),
+              ),
+            ],
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                _updateTaskNameDescription(taskId, editedName, editedDescription);
+                Navigator.of(context).pop();
+              },
+              child: const Text('Save'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _updateTaskNameDescription(String taskId, String newName, String newDescription) async {
+    try {
+      await FirebaseFirestore.instance.collection('tasks').doc(taskId).update({
+        'name': newName,
+        'description': newDescription,
+      });
+    } catch (e) {
+      print('Error updating task name and description: $e');
+    }
+  }
+
   void _deleteTask(String taskId,  Map<String, dynamic> taskData) async {
     try {
       final snackBar = SnackBar(
@@ -110,14 +169,29 @@ class _TodoTaskListState extends State<TodoTaskList> {
                     _deleteTask(taskId, task);
                   },
                   child: ListTile(
-                    trailing: GestureDetector(
-                      onTap: () {
-                        _updateTaskStatus(taskId, isDoing ? 'To-Do' : 'Currently Doing', isDoing ? 'Currently Doing' : 'To-Do');
-                      },
-                      child: Icon(
-                        isDoing ? Icons.star : Icons.star_border,
-                        color: isDoing ? Colors.white : null, // Fill star with yellow color when task is "Currently Doing"
-                      ),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            _updateTaskStatus(taskId, isDoing ? 'To-Do' : 'Currently Doing', isDoing ? 'Currently Doing' : 'To-Do');
+                          },
+                          child: Icon(
+                            isDoing ? Icons.star : Icons.star_border,
+                            color: isDoing ? Colors.white : null,
+                          ),
+                        ),
+                        const  SizedBox(width: 23),
+                        GestureDetector(
+                          onTap: () {
+                            _showEditDialog(taskId, task);
+                          },
+                          child: const Icon(
+                            Icons.edit,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
                     ),
 
                     leading: Checkbox(
