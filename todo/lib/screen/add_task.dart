@@ -43,7 +43,6 @@ class _TaskEntryFormState extends State<TaskEntryForm> {
           const SizedBox(height: 16.0),
           ElevatedButton(
             onPressed: () {
-              // Add the task to Firestore and navigate back to the previous screen.
               _addTaskToFirestore();
               Navigator.of(context).pop();
             },
@@ -58,12 +57,21 @@ class _TaskEntryFormState extends State<TaskEntryForm> {
     final taskName = _taskNameController.text;
     final taskDescription = _taskDescriptionController.text;
 
-    final taskData = {
-      'name': taskName,
-      'description': taskDescription,
-      'status': 'To-Do',
-    };
+    if (taskName.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Task name cannot be empty.'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    } else {
+      final taskData = {
+        'name': taskName,
+        'description': taskDescription,
+        'status': 'To-Do',
+      };
 
-    await FirebaseFirestore.instance.collection('tasks').add(taskData);
+      await FirebaseFirestore.instance.collection('tasks').add(taskData);
+    }
   }
 }

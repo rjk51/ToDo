@@ -11,9 +11,8 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int _selectedIndex = 0; // Index for the selected tab
+  int _selectedIndex = 0;
 
-  // Function to change the selected tab
   void _onTabSelected(int index) {
     setState(() {
       _selectedIndex = index;
@@ -37,18 +36,28 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'TODO',
-          style: GoogleFonts.jacquesFrancoisShadow(
-            fontSize: 25,
-            color: Colors.black,
-          ),
+        title: Row(
+          children: [
+            Image.asset(
+              'assets/images/todol1.png',
+              width: 45,
+              height: 45,
+            ),
+            const SizedBox(width: 13),
+            Text(
+              'TODO',
+              style: GoogleFonts.jacquesFrancoisShadow(
+                fontSize: 30,
+                color: Colors.white,
+              ),
+            ),
+          ],
         ),
         actions: [
           IconButton(
             icon: const Icon(
               Icons.add,
-              color: Colors.black,
+              color: Colors.white,
               size: 30,
             ),
             onPressed: () {
@@ -62,7 +71,6 @@ class _MainScreenState extends State<MainScreen> {
       ),
       body: _buildSelectedPage(_selectedIndex), // Show the selected page
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color(0xffd88e43),
         currentIndex: _selectedIndex, // Currently selected tab
         onTap: _onTabSelected, // Function to handle tab selection
         items: const [
