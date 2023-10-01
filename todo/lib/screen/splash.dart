@@ -9,17 +9,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   Future.delayed(const Duration(seconds: 5), () {
-  //     navigateToMainScreen(context);
-  //   });
-  // }
-
-  // void navigateToMainScreen(BuildContext context) {
-  //   Navigator.of(context).pushReplacement(const MainScreen(),);
-  // }
 
   @override
   Widget build(BuildContext context) {

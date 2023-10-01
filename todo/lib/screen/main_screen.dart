@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo/screen/add_task.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:todo/widgets/task_list.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -17,6 +17,19 @@ class _MainScreenState extends State<MainScreen> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  Widget _buildSelectedPage(int index) {
+    switch (index) {
+      case 0:
+        return const TodoTaskList(status: 'To-Do');
+      case 1:
+        return const TodoTaskList(status: 'Currently Doing');
+      case 2:
+        return const TodoTaskList(status: 'Done');
+      default:
+        return const SizedBox.shrink();
+    }
   }
 
   @override
@@ -36,8 +49,9 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ],
       ),
-      body: const Center(child: TodoTaskList()), // Show the selected page
+      body: _buildSelectedPage(_selectedIndex), // Show the selected page
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: const Color(0xffd88e43),
         currentIndex: _selectedIndex, // Currently selected tab
         onTap: _onTabSelected, // Function to handle tab selection
         items: const [
@@ -54,48 +68,6 @@ class _MainScreenState extends State<MainScreen> {
             label: 'Done',
           ),
         ],
-      ),
-    );
-  }
-}
-
-class TodoTaskList extends StatelessWidget {
-  const TodoTaskList({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection('tasks')
-            .where('status',
-                isEqualTo: 'To-Do') // Adjust the field and value accordingly
-            .snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          }
-
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
-          }
-
-          final tasks = snapshot.data!.docs;
-
-          return ListView.builder(
-            itemCount: tasks.length,
-            itemBuilder: (context, index) {
-              final task = tasks[index].data() as Map<String, dynamic>;
-              return ListTile(
-                title: Text(
-                  task['name'],
-                ),
-                subtitle: Text(task['description']),
-                // Add more UI elements here as needed.
-              );
-            },
-          );
-        },
       ),
     );
   }
