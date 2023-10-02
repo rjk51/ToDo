@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
     final lightTheme = ThemeData(
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: Color.fromARGB(255, 168, 171, 172),
-        selectedItemColor: Color.fromARGB(255, 255, 255, 255),
+        selectedItemColor: Colors.white,
         unselectedItemColor: Colors.black,
       ),
       primarySwatch: Colors.blue,
@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: Color.fromARGB(255, 129, 129, 129),
         selectedItemColor: Colors.black,
-        unselectedItemColor: Color.fromARGB(255, 255, 255, 255),
+        unselectedItemColor: Colors.white,
       ),
       primarySwatch: Colors.blue,
       brightness: Brightness.dark,

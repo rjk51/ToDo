@@ -60,10 +60,10 @@ class _MainScreenState extends State<MainScreen> {
           ],
         ),
       ),
-      body: _buildSelectedPage(_selectedIndex), // Show the selected page
+      body: _buildSelectedPage(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex, // Currently selected tab
-        onTap: _onTabSelected, // Function to handle tab selection
+        currentIndex: _selectedIndex,
+        onTap: _onTabSelected,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.checklist),

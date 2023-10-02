@@ -84,9 +84,9 @@ class _TodoTaskListState extends State<TodoTaskList> {
                               : const Color.fromARGB(255, 255, 255, 255);
 
                       return Dismissible(
-                        key: Key(taskId), // Use the document ID as the key
+                        key: Key(taskId),
                         background: Container(
-                          color: Colors.red, // Background color when swiped
+                          color: Colors.red,
                           alignment: Alignment.centerLeft,
                           child: const Icon(
                             Icons.delete,
@@ -94,8 +94,7 @@ class _TodoTaskListState extends State<TodoTaskList> {
                           ),
                         ),
                         secondaryBackground: Container(
-                          color: Colors
-                              .green, // Swipe right to mark as "Currently Doing"
+                          color: Colors.green,
                           alignment: Alignment.centerRight,
                           child: const Icon(
                             Icons.play_arrow,
