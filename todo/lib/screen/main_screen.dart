@@ -40,11 +40,6 @@ class _MainScreenState extends State<MainScreen> {
       ? const Color.fromARGB(255, 255, 255, 255)
       : const Color.fromARGB(255, 0, 0, 0);
 
-    Color iconColor =
-    Theme.of(context).brightness == Brightness.dark
-      ? const Color.fromARGB(255, 255, 255, 255)
-      : const Color.fromARGB(255, 0, 0, 0);
-
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -64,21 +59,6 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ],
         ),
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.add,
-              color: iconColor,
-              size: 30,
-            ),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const TaskEntryScreen()));
-            },
-          ),
-        ],
       ),
       body: _buildSelectedPage(_selectedIndex), // Show the selected page
       bottomNavigationBar: BottomNavigationBar(
@@ -99,6 +79,26 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ],
       ),
+      floatingActionButton: SizedBox(
+        width: 65,
+        height: 65,
+        child: FloatingActionButton(
+          shape: const CircleBorder(),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const TaskEntryScreen()),
+            );
+          },
+          backgroundColor: Colors.grey,
+          child: const Icon(
+            Icons.add,
+            size: 35,
+            color: Colors.black,
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

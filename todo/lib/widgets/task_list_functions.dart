@@ -75,6 +75,7 @@ void updateTaskNameDescription(
 void deleteTask(BuildContext context, String taskId, Map<String, dynamic> taskData) async {
   try {
     final snackBar = SnackBar(
+      duration: const Duration(seconds: 2),
       content: const Text(
         'Task deleted',
         style: TextStyle(fontSize: 16),

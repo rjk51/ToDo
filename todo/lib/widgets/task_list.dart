@@ -72,6 +72,12 @@ class _TodoTaskListState extends State<TodoTaskList> {
                           Theme.of(context).brightness == Brightness.dark
                               ? const Color.fromARGB(255, 0, 0, 0)
                               : const Color.fromARGB(255, 255, 255, 255);
+
+                      Color subColor =
+                          Theme.of(context).brightness == Brightness.dark
+                              ? const Color.fromARGB(255, 85, 85, 85)
+                              : const  Color.fromARGB(255, 179, 178, 178);
+
                       Color iconColor =
                           Theme.of(context).brightness == Brightness.dark
                               ? const Color.fromARGB(255, 0, 0, 0)
@@ -81,46 +87,44 @@ class _TodoTaskListState extends State<TodoTaskList> {
                         key: Key(taskId), // Use the document ID as the key
                         background: Container(
                           color: Colors.red, // Background color when swiped
-                          alignment: Alignment.centerRight,
+                          alignment: Alignment.centerLeft,
                           child: const Icon(
                             Icons.delete,
                             color: Colors.white,
                           ),
                         ),
+                        secondaryBackground: Container(
+                          color: Colors
+                              .green, // Swipe right to mark as "Currently Doing"
+                          alignment: Alignment.centerRight,
+                          child: const Icon(
+                            Icons.play_arrow,
+                            color: Colors.white,
+                          ),
+                        ),
                         onDismissed: (direction) {
-                          _deleteTask(taskId, task);
+                          if (direction == DismissDirection.endToStart) {
+                            _updateTaskStatus(
+                              taskId,
+                              'Currently Doing',
+                              isDoing ? 'Currently Doing' : 'To-Do',
+                            );
+                          } else if (direction == DismissDirection.startToEnd) {
+                            _deleteTask(taskId, task);
+                          }
                         },
                         child: ListTile(
                           tileColor: tileColor,
                           textColor: textColor,
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  _updateTaskStatus(
-                                      taskId,
-                                      isDoing ? 'To-Do' : 'Currently Doing',
-                                      isDoing ? 'Currently Doing' : 'To-Do');
-                                },
-                                child: Icon(
-                                  isDoing ? Icons.star : Icons.star_border,
-                                  color: isDoing ? Colors.white : null,
-                                ),
-                              ),
-                              const SizedBox(width: 23),
-                              GestureDetector(
-                                onTap: () {
-                                  _showEditDialog(taskId, task);
-                                },
-                                child: Icon(
-                                  Icons.edit,
-                                  color: iconColor,
-                                ),
-                              ),
-                            ],
+                          trailing: GestureDetector(
+                            onTap: () {
+                              _showEditDialog(taskId, task);
+                            },
+                            child: Icon(
+                              Icons.edit,
+                              color: iconColor,
+                            ),
                           ),
-
                           leading: Checkbox(
                             checkColor: Colors.black,
                             value: isDone,
@@ -136,13 +140,15 @@ class _TodoTaskListState extends State<TodoTaskList> {
                             task['name'],
                             style: GoogleFonts.itim(
                               fontSize: 20,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           subtitle: Text(
                             task['description'],
-                            style: GoogleFonts.itim(),
+                            style: GoogleFonts.itim(
+                              color: subColor,
+                            ),
                           ),
-                          // Add more UI elements here as needed.
                         ),
                       );
                     },
