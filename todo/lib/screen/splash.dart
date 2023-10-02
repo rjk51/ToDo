@@ -15,6 +15,16 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
 
+    Color splashColor =
+    Theme.of(context).brightness == Brightness.dark
+      ? Colors.black
+      : Colors.white;
+
+    Color textColor =
+    Theme.of(context).brightness == Brightness.dark
+      ? Colors.white
+      : Colors.black;
+
     Future.delayed(const Duration(seconds: 4), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => const MainScreen()),
@@ -22,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
     });
 
     return Scaffold(
-      backgroundColor: const Color(0xffd88e43),
+      backgroundColor: splashColor,
       body: Container(
         alignment: Alignment.center,
         child: Column(
@@ -30,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/images/todol.jpeg',
+              'assets/images/todol1.png',
               width: 200,
               height: 200,
               fit: BoxFit.cover,
@@ -40,7 +50,7 @@ class _SplashScreenState extends State<SplashScreen> {
               'TODO',
               style: GoogleFonts.jacquesFrancoisShadow(
                 fontSize: 40,
-                color: Colors.black,
+                color: textColor,
               ),
             ),
           ]
