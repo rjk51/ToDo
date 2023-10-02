@@ -34,6 +34,17 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    Color textColor =
+    Theme.of(context).brightness == Brightness.dark
+      ? const Color.fromARGB(255, 255, 255, 255)
+      : const Color.fromARGB(255, 0, 0, 0);
+
+    Color iconColor =
+    Theme.of(context).brightness == Brightness.dark
+      ? const Color.fromARGB(255, 255, 255, 255)
+      : const Color.fromARGB(255, 0, 0, 0);
+
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -48,16 +59,16 @@ class _MainScreenState extends State<MainScreen> {
               'TODO',
               style: GoogleFonts.jacquesFrancoisShadow(
                 fontSize: 30,
-                color: Colors.white,
+                color: textColor,
               ),
             ),
           ],
         ),
         actions: [
           IconButton(
-            icon: const Icon(
+            icon: Icon(
               Icons.add,
-              color: Colors.white,
+              color: iconColor,
               size: 30,
             ),
             onPressed: () {

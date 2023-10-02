@@ -64,6 +64,19 @@ class _TodoTaskListState extends State<TodoTaskList> {
                       bool isDone = task['status'] == 'Done';
                       bool isDoing = task['status'] == 'Currently Doing';
 
+                      Color tileColor =
+                          Theme.of(context).brightness == Brightness.dark
+                              ? const Color.fromARGB(186, 255, 255, 255)
+                              : const Color.fromARGB(162, 0, 0, 0);
+                      Color textColor =
+                          Theme.of(context).brightness == Brightness.dark
+                              ? const Color.fromARGB(255, 0, 0, 0)
+                              : const Color.fromARGB(255, 255, 255, 255);
+                      Color iconColor =
+                          Theme.of(context).brightness == Brightness.dark
+                              ? const Color.fromARGB(255, 0, 0, 0)
+                              : const Color.fromARGB(255, 255, 255, 255);
+
                       return Dismissible(
                         key: Key(taskId), // Use the document ID as the key
                         background: Container(
@@ -78,7 +91,8 @@ class _TodoTaskListState extends State<TodoTaskList> {
                           _deleteTask(taskId, task);
                         },
                         child: ListTile(
-                          tileColor: const Color.fromARGB(55, 92, 23, 104),
+                          tileColor: tileColor,
+                          textColor: textColor,
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -99,15 +113,16 @@ class _TodoTaskListState extends State<TodoTaskList> {
                                 onTap: () {
                                   _showEditDialog(taskId, task);
                                 },
-                                child: const Icon(
+                                child: Icon(
                                   Icons.edit,
-                                  color: Colors.white,
+                                  color: iconColor,
                                 ),
                               ),
                             ],
                           ),
 
                           leading: Checkbox(
+                            checkColor: Colors.black,
                             value: isDone,
                             onChanged: (bool? value) {
                               _updateTaskStatus(

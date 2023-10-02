@@ -25,20 +25,27 @@ class MyApp extends StatelessWidget {
 
     final lightTheme = ThemeData(
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        backgroundColor: Color.fromARGB(255, 123, 18, 141),
+        backgroundColor: Color.fromARGB(255, 168, 171, 172),
+        selectedItemColor: Color.fromARGB(255, 255, 255, 255),
+        unselectedItemColor: Color.fromARGB(255, 0, 0, 0),
       ),
       primarySwatch: Colors.blue,
-      brightness: Brightness.dark,
+      brightness: Brightness.light,
       useMaterial3: true,
       colorScheme: ColorScheme.fromSeed(
-        brightness: Brightness.dark,
-        seedColor: const Color.fromARGB(255, 7, 75, 153),
-        surface: Colors.purple,
+        brightness: Brightness.light,
+        seedColor: const Color.fromARGB(255, 32, 39, 41),
+        surface: Colors.white,
       ),
-      scaffoldBackgroundColor: Colors.purple,
+      scaffoldBackgroundColor: Colors.white,
     );
 
     final darkTheme = ThemeData(
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        backgroundColor: Color.fromARGB(255, 129, 129, 129),
+        selectedItemColor: Color.fromARGB(255, 0, 0, 0),
+        unselectedItemColor: Color.fromARGB(255, 255, 255, 255),
+      ),
       primarySwatch: Colors.blue,
       brightness: Brightness.dark,
       useMaterial3: true,

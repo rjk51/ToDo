@@ -9,7 +9,7 @@ void showEditDialog(BuildContext context, String taskId, Map<String, dynamic> ta
       String editedDescription = taskData['description'];
 
       return AlertDialog(
-        backgroundColor: const Color.fromARGB(97, 119, 23, 148),
+        backgroundColor: const Color.fromARGB(95, 209, 202, 202),
         title: const Text('Edit Task'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -34,19 +34,25 @@ void showEditDialog(BuildContext context, String taskId, Map<String, dynamic> ta
         ),
         actions: [
           ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color.fromARGB(255, 150, 150, 150),
+            ),
             onPressed: () {
               updateTaskNameDescription(
                   taskId, editedName, editedDescription);
               Navigator.of(context).pop();
             },
-            child: const Text('Save', style: TextStyle(color: Colors.white)),
+            child: const Text('Save', style: TextStyle(color: Colors.black)),
           ),
           ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color.fromARGB(255, 150, 150, 150),
+            ),
             onPressed: () {
               Navigator.of(context).pop();
             },
             child:
-                const Text('Cancel', style: TextStyle(color: Colors.white)),
+                const Text('Cancel', style: TextStyle(color: Colors.black)),
           ),
         ],
       );
