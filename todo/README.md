@@ -4,7 +4,7 @@ A new Flutter project.
 
 ## Getting Started
 
-![Screenshot_2023-10-03-14-35-46-196_com example todo](https://github.com/rjk51/ToDo/assets/77317609/833e28c6-3344-4e11-94f2-dc086f120735 =250x250)
+![Screenshot_2023-10-03-14-35-46-196_com example todo](https://github.com/rjk51/ToDo/assets/77317609/833e28c6-3344-4e11-94f2-dc086f120735 width="48")
 ![Screenshot_2023-10-03-14-35-37-043_com example todo](https://github.com/rjk51/ToDo/assets/77317609/d8d7770a-3d6e-47d2-a077-d119ae1a9818)
 ![Screenshot_2023-10-03-14-34-36-785_com example todo](https://github.com/rjk51/ToDo/assets/77317609/3a82ee2b-9a69-45d4-80d0-df32f30864a1)
 ![Screenshot_2023-10-03-14-34-23-480_com example todo](https://github.com/rjk51/ToDo/assets/77317609/16c0e376-5ebd-4c80-b42a-09f15560dddc)
