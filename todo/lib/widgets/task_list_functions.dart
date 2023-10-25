@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:todo/widgets/user_id.dart';
 
-void showEditDialog(BuildContext context, String taskId, Map<String, dynamic> taskData) {
+void showEditDialog(
+    BuildContext context, String taskId, Map<String, dynamic> taskData) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -25,10 +27,8 @@ void showEditDialog(BuildContext context, String taskId, Map<String, dynamic> ta
               onChanged: (value) {
                 editedDescription = value;
               },
-              controller:
-                  TextEditingController(text: taskData['description']),
-              decoration:
-                  const InputDecoration(labelText: 'Task Description'),
+              controller: TextEditingController(text: taskData['description']),
+              decoration: const InputDecoration(labelText: 'Task Description'),
             ),
           ],
         ),
@@ -38,8 +38,7 @@ void showEditDialog(BuildContext context, String taskId, Map<String, dynamic> ta
               backgroundColor: const Color.fromARGB(255, 150, 150, 150),
             ),
             onPressed: () {
-              updateTaskNameDescription(
-                  taskId, editedName, editedDescription);
+              updateTaskNameDescription(taskId, editedName, editedDescription);
               Navigator.of(context).pop();
             },
             child: const Text('Save', style: TextStyle(color: Colors.black)),
@@ -51,8 +50,7 @@ void showEditDialog(BuildContext context, String taskId, Map<String, dynamic> ta
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child:
-                const Text('Cancel', style: TextStyle(color: Colors.black)),
+            child: const Text('Cancel', style: TextStyle(color: Colors.black)),
           ),
         ],
       );
@@ -61,18 +59,24 @@ void showEditDialog(BuildContext context, String taskId, Map<String, dynamic> ta
 }
 
 void updateTaskNameDescription(
-  String taskId, String newName, String newDescription) async {
-    try {
-      await FirebaseFirestore.instance.collection('tasks').doc(taskId).update({
-        'name': newName,
-        'description': newDescription,
-      });
-    } catch (e) {
-      print('Error updating task name and description: $e');
-    }
+    String taskId, String newName, String newDescription) async {
+  try {
+    await FirebaseFirestore.instance
+        .collection('tasks')
+        .doc(userId)
+        .collection('userTasks')
+        .doc(taskId)
+        .update({
+      'name': newName,
+      'description': newDescription,
+    });
+  } catch (e) {
+    print('Error updating task name and description: $e');
   }
+}
 
-void deleteTask(BuildContext context, String taskId, Map<String, dynamic> taskData) async {
+void deleteTask(
+    BuildContext context, String taskId, Map<String, dynamic> taskData) async {
   try {
     final snackBar = SnackBar(
       duration: const Duration(seconds: 2),
@@ -83,23 +87,34 @@ void deleteTask(BuildContext context, String taskId, Map<String, dynamic> taskDa
       action: SnackBarAction(
         label: 'Undo',
         onPressed: () {
-          FirebaseFirestore.instance.collection('tasks').add(taskData);
+          FirebaseFirestore.instance
+              .collection('tasks')
+              .doc(userId)
+              .collection('userTasks')
+              .add(taskData);
         },
       ),
     );
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    await FirebaseFirestore.instance.collection('tasks').doc(taskId).delete();
+    await FirebaseFirestore.instance
+        .collection('tasks')
+        .doc(userId)
+        .collection('userTasks')
+        .doc(taskId)
+        .delete();
   } catch (e) {
     print('Error deleting task: $e');
   }
 }
 
-void updateTaskStatus(
-    BuildContext context, String taskId, String newStatus, String oldStatus) async {
+void updateTaskStatus(BuildContext context, String taskId, String newStatus,
+    String oldStatus) async {
   try {
     await FirebaseFirestore.instance
         .collection('tasks')
+        .doc(userId)
+        .collection('userTasks')
         .doc(taskId)
         .update({'status': newStatus});
 

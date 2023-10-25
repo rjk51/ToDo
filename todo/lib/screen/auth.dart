@@ -84,8 +84,16 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Color bgcolor = Theme.of(context).brightness == Brightness.dark
+    ? Colors.black
+    : Colors.white;
+
+    Color cardcolor = Theme.of(context).brightness == Brightness.dark
+    ? Colors.white
+    : Colors.black;
+
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: bgcolor,
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -99,9 +107,10 @@ class _AuthScreenState extends State<AuthScreen> {
                   right: 20,
                 ),
                 width: 200,
-                child: Image.asset('assets/images/chat.png'),
+                child: Image.asset('assets/images/todol1.png'),
               ),
               Card(
+                color: cardcolor,
                 margin: const EdgeInsets.all(20),
                 child: SingleChildScrollView(
                   child: Padding(
@@ -118,8 +127,10 @@ class _AuthScreenState extends State<AuthScreen> {
                               },
                             ),
                           TextFormField(
+                            style: TextStyle(color: bgcolor),
                             decoration: const InputDecoration(
-                                labelText: 'Email Address'),
+                                labelText: 'Email Address',
+                                labelStyle: TextStyle(color: Colors.grey)),
                             keyboardType: TextInputType.emailAddress,
                             autocorrect: false,
                             textCapitalization: TextCapitalization.none,
@@ -138,8 +149,10 @@ class _AuthScreenState extends State<AuthScreen> {
                           ),
                           if (!_isLogin)
                             TextFormField(
+                              style: TextStyle(color: bgcolor),
                               decoration:
-                                  const InputDecoration(labelText: 'Username'),
+                                  const InputDecoration(labelText: 'Username',
+                                  labelStyle: TextStyle(color: Colors.grey)),
                               enableSuggestions: false,
                               validator: (value) {
                                 if (value == null ||
@@ -154,8 +167,11 @@ class _AuthScreenState extends State<AuthScreen> {
                               },
                             ),
                           TextFormField(
+                            style: TextStyle(color: bgcolor),
                             decoration:
-                                const InputDecoration(labelText: 'Password'),
+                                const InputDecoration(
+                                  labelText: 'Password',
+                                  labelStyle: TextStyle(color: Colors.grey)),
                             obscureText: true,
                             validator: (value) {
                               if (value == null || value.trim().length < 6) {
@@ -174,11 +190,10 @@ class _AuthScreenState extends State<AuthScreen> {
                             ElevatedButton(
                               onPressed: _submit,
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Theme.of(context)
-                                    .colorScheme
-                                    .primaryContainer,
+                                backgroundColor: bgcolor,
                               ),
-                              child: Text(_isLogin ? 'Login' : 'Signup'),
+                              child: Text(_isLogin ? 'Login' : 'Signup',
+                              style: TextStyle(color: cardcolor)),
                             ),
                           if (!_isAuthenticating)
                             TextButton(
@@ -189,7 +204,8 @@ class _AuthScreenState extends State<AuthScreen> {
                               },
                               child: Text(_isLogin
                                   ? 'Create an account'
-                                  : 'I already have an account'),
+                                  : 'I already have an account',
+                                  style: TextStyle(color: bgcolor)),
                             ),
                         ],
                       ),

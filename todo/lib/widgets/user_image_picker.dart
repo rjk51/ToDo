@@ -38,6 +38,10 @@ class _UserImagePickerState extends State<UserImagePicker> {
 
   @override
   Widget build(BuildContext context) {
+    Color txtColor = Theme.of(context).brightness == Brightness.dark
+    ? Colors.black
+    : Colors.white;
+    
     return Column(
       children: [
         CircleAvatar(
@@ -47,11 +51,12 @@ class _UserImagePickerState extends State<UserImagePicker> {
         ),
         TextButton.icon(
           onPressed: _pickImage,
-          icon: const Icon(Icons.image),
+          icon: Icon(Icons.image,
+            color: txtColor),
           label: Text(
             'Add Image',
             style: TextStyle(
-              color: Theme.of(context).colorScheme.primary,
+              color: txtColor,
             )
           ),
         ),
