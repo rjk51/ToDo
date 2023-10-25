@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:todo/widgets/task_list_functions.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class TodoTaskList extends StatefulWidget {
   final String status;
@@ -27,10 +28,14 @@ class _TodoTaskListState extends State<TodoTaskList> {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+    final userId = user?.uid;
     return Center(
       child: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('tasks')
+            .doc(userId)
+            .collection('userTasks')
             .where('status', isEqualTo: widget.status)
             .snapshots(),
         builder: (context, snapshot) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class TaskEntryScreen extends StatelessWidget {
   const TaskEntryScreen({super.key});
@@ -65,13 +66,20 @@ class _TaskEntryFormState extends State<TaskEntryForm> {
         ),
       );
     } else {
+      User? user = FirebaseAuth.instance.currentUser;
+      final userId = user!.uid;
+
       final taskData = {
         'name': taskName,
         'description': taskDescription,
         'status': 'To-Do',
       };
 
-      await FirebaseFirestore.instance.collection('tasks').add(taskData);
+      await FirebaseFirestore.instance
+          .collection('tasks')
+          .doc(userId)
+          .collection('userTasks')
+          .add(taskData);
     }
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo/screen/add_task.dart';
 import 'package:todo/widgets/task_list.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -34,11 +35,9 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-    Color textColor =
-    Theme.of(context).brightness == Brightness.dark
-      ? const Color.fromARGB(255, 255, 255, 255)
-      : const Color.fromARGB(255, 0, 0, 0);
+    Color textColor = Theme.of(context).brightness == Brightness.dark
+        ? const Color.fromARGB(255, 255, 255, 255)
+        : const Color.fromARGB(255, 0, 0, 0);
 
     return Scaffold(
       appBar: AppBar(
@@ -57,6 +56,15 @@ class _MainScreenState extends State<MainScreen> {
                 color: textColor,
               ),
             ),
+            const SizedBox(width: 145),
+            IconButton(
+                onPressed: () {
+                  FirebaseAuth.instance.signOut();
+                },
+                icon: Icon(
+                  Icons.logout,
+                  color: textColor,
+                ))
           ],
         ),
       ),

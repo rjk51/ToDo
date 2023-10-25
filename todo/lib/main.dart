@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:todo/firebase_options.dart';
-import 'package:todo/screen/splash.dart';
+import 'package:todo/screen/main_screen.dart';
+import 'package:todo/screen/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -61,7 +63,15 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'ToDo',
       theme: isDarkMode ? darkTheme : lightTheme,
-      home: const SplashScreen(),
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (ctx, snapshot) {
+          if(snapshot.hasData) {
+            return const MainScreen();
+          }
+          return const AuthScreen();
+        }
+      ),
     );
   }
 }
