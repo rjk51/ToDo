@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+
 final _firebase = FirebaseAuth.instance;
 
 class AuthScreen extends StatefulWidget {
@@ -26,6 +27,7 @@ class _AuthScreenState extends State<AuthScreen> {
   var _enteredUsername = '';
   File? _selectedImage;
   var _isAuthenticating = false;
+  bool _isObscured = true;
   
 
   void _submit() async {
@@ -129,6 +131,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           TextFormField(
                             style: TextStyle(color: bgcolor),
                             decoration: const InputDecoration(
+                                prefixIcon: Icon(Icons.email),
                                 labelText: 'Email Address',
                                 labelStyle: TextStyle(color: Colors.grey)),
                             keyboardType: TextInputType.emailAddress,
@@ -151,8 +154,10 @@ class _AuthScreenState extends State<AuthScreen> {
                             TextFormField(
                               style: TextStyle(color: bgcolor),
                               decoration:
-                                  const InputDecoration(labelText: 'Username',
-                                  labelStyle: TextStyle(color: Colors.grey)),
+                                  const InputDecoration(
+                                    prefixIcon: Icon(Icons.person),
+                                    labelText: 'Username',
+                                    labelStyle: TextStyle(color: Colors.grey)),
                               enableSuggestions: false,
                               validator: (value) {
                                 if (value == null ||
@@ -168,11 +173,22 @@ class _AuthScreenState extends State<AuthScreen> {
                             ),
                           TextFormField(
                             style: TextStyle(color: bgcolor),
-                            decoration:
-                                const InputDecoration(
-                                  labelText: 'Password',
-                                  labelStyle: TextStyle(color: Colors.grey)),
-                            obscureText: true,
+                            obscureText: _isObscured,
+                            decoration: InputDecoration(
+                              prefixIcon: const Icon(Icons.key),
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _isObscured = !_isObscured;
+                                  });
+                                },
+                                icon: Icon(
+                                  _isObscured ? Icons.visibility : Icons.visibility_off,
+                                ),
+                              ),
+                              labelText: 'Password',
+                              labelStyle: const TextStyle(color: Colors.grey)
+                            ),
                             validator: (value) {
                               if (value == null || value.trim().length < 6) {
                                 return 'Password must be at least 6 characters long.';
